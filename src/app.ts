@@ -9,6 +9,7 @@ import * as morgan from 'morgan';
 import * as path from 'path';
 import * as mongoose from 'mongoose';
 import {config} from './config';
+import {userRouter} from './routes';
 
 dotenv.config();
 

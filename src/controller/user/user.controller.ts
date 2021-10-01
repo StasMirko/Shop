@@ -1,9 +1,10 @@
 import {NextFunction, Request, Response} from 'express';
-import {userService} from '../../services';
+import {emailService, userService} from '../../services';
 import * as Joi from 'joi';
 import {newUserValidator} from '../../validators';
 import {IUser} from '../../models';
-import {hashPassword} from '../../helpers';
+import {hashPassword, tokinizer} from '../../helpers';
+import {ActionEnum} from '../../constants';
 
 class UserController {
   async createUser(req: Request, res: Response, next: NextFunction){
@@ -18,6 +19,10 @@ class UserController {
     user.password = await hashPassword(user.password);
 
     await userService.createUser(user);
+
+    const {access_token} = tokinizer(ActionEnum.USER_REGISTER);
+
+    await emailService.sendEmail(user.email, ActionEnum.USER_REGISTER, {token: access_token});
 
     res.sendStatus(201);
   }

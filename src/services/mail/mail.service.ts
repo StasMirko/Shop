@@ -7,6 +7,15 @@ import {config} from '../../config';
 import {htmlTemplates} from '../../email-templates';
 import {ErrorHandler} from '../../errors';
 
+if (
+  !config.FRONTEND_URL
+  || !config.ROOT_EMAIL_SERVICE
+  || !config.ROOT_EMAIL
+  || !config.ROOT_EMAIL_PASSWORD
+) {
+  throw Error('Root email credentials are not defined!');
+}
+
 const contextExtension = {
   frontendUrl: config.FRONTEND_URL
 };
@@ -22,12 +31,12 @@ const transporter = nodemailer.createTransport({
 const emailTemplates = new EmailTemplates({
   message: {},
   views: {
-    root: path.resolve((global as any).appRoot, 'email-templates', 'templates')
+    root: path.resolve(__dirname, '../../', 'email-templates')
   }
 });
 
 export class MailService {
-  async sendEmail(email: string, action: ActionEnum, context: any = {}) {
+  async sendEmail(email: string, action: ActionEnum, context: any = {}): Promise<void> {
     const templateInfo = htmlTemplates[action];
 
     if (!templateInfo) {

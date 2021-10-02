@@ -4,6 +4,11 @@ import {UserRoleEnum, UserStatusEnum} from '../../constants';
 
 export type UserType = IUser & Document
 
+const tokenSubModel = {
+  token: String,
+  action: String
+};
+
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 export const UserSchema: Schema = new Schema<IUser>({
@@ -50,6 +55,7 @@ export const UserSchema: Schema = new Schema<IUser>({
     required: true,
     default: UserStatusEnum.PENDING
   },
+  tokens: [tokenSubModel],
   createdAt: {
     type: Date,
     default: Date.now()

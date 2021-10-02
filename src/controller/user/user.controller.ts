@@ -18,14 +18,19 @@ class UserController {
 
     user.password = await hashPassword(user.password);
 
-    await userService.createUser(user);
-
+    const {_id} = await userService.createUser(user);
     const {access_token} = tokinizer(ActionEnum.USER_REGISTER);
 
+    await userService.addActionToken(_id, {action: ActionEnum.USER_REGISTER, token: access_token});
     await emailService.sendEmail(user.email, ActionEnum.USER_REGISTER, {token: access_token});
 
     res.sendStatus(201);
   }
+
+  confirmUser(req: Request, res: Response, next: NextFunction){
+    res.end();
+  }
+
 }
 
 export const userController = new UserController();

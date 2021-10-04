@@ -2,9 +2,10 @@ import {NextFunction, Request, Response} from 'express';
 import {emailService, userService} from '../../services';
 import * as Joi from 'joi';
 import {newUserValidator} from '../../validators';
-import {IUser} from '../../models';
+import {IRequestExtended, IUser} from '../../models';
 import {hashPassword, tokinizer} from '../../helpers';
-import {ActionEnum} from '../../constants';
+import {ActionEnum, ResponseStatusCodesEnum, UserStatusEnum} from '../../constants';
+import {customErrors, ErrorHandler} from '../../errors';
 
 class UserController {
   async createUser(req: Request, res: Response, next: NextFunction){
@@ -27,7 +28,21 @@ class UserController {
     res.sendStatus(201);
   }
 
-  confirmUser(req: Request, res: Response, next: NextFunction){
+  async confirmUser(req: IRequestExtended, res: Response, next: NextFunction){
+
+    const {_id, status} = req.user as IUser;
+    if (status !== UserStatusEnum.PENDING) {
+      return next(
+        new ErrorHandler(
+          ResponseStatusCodesEnum.BAD_REQUEST,
+          customErrors.BAD_REQUEST_USER_ACTIVATED.message,
+          customErrors.BAD_REQUEST_USER_ACTIVATED.code
+        )
+      );
+    }
+
+    await userService.updateUserByParams({_id}, {status: UserStatusEnum.CONFIRMED});
+
     res.end();
   }
 

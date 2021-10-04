@@ -37,6 +37,19 @@ class UserService {
       ]
     }) as any;
   }
+
+  // removeActionToken(action: ActionEnum, token: string): Promise<IUser | null> {
+  //   return UserModel.update(
+  //     {},
+  //     {
+  //       $pull: {
+  //         $and: [
+  //           {'tokens.token': token},
+  //           {'tokens.action': action}
+  //         ]
+  //       } as any
+  //     }) as any;
+  // }
 }
 
 export const userService = new UserService();

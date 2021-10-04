@@ -2,7 +2,7 @@ import * as EmailTemplates from 'email-templates';
 import * as nodemailer from 'nodemailer';
 import * as path from 'path';
 
-import {ActionEnum} from '../../constants';
+import {ActionEnum, ResponseStatusCodesEnum} from '../../constants';
 import {config} from '../../config';
 import {htmlTemplates} from '../../email-templates';
 import {ErrorHandler} from '../../errors';
@@ -40,7 +40,7 @@ export class MailService {
     const templateInfo = htmlTemplates[action];
 
     if (!templateInfo) {
-      throw new ErrorHandler(500, 'Template not found');
+      throw new ErrorHandler(ResponseStatusCodesEnum.SERVER, 'Template not found');
     }
 
     Object.assign(context, contextExtension);

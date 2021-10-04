@@ -4,7 +4,7 @@ import * as Joi from 'joi';
 import {newUserValidator} from '../../validators';
 import {IRequestExtended, IUser} from '../../models';
 import {hashPassword, tokinizer} from '../../helpers';
-import {ActionEnum, ResponseStatusCodesEnum, UserStatusEnum} from '../../constants';
+import {ActionEnum, RequestHeadersEnum, ResponseStatusCodesEnum, UserStatusEnum} from '../../constants';
 import {customErrors, ErrorHandler} from '../../errors';
 
 class UserController {
@@ -25,12 +25,14 @@ class UserController {
     await userService.addActionToken(_id, {action: ActionEnum.USER_REGISTER, token: access_token});
     await emailService.sendEmail(user.email, ActionEnum.USER_REGISTER, {token: access_token});
 
-    res.sendStatus(201);
+    res.sendStatus(ResponseStatusCodesEnum.CREATED);
   }
 
   async confirmUser(req: IRequestExtended, res: Response, next: NextFunction){
 
-    const {_id, status} = req.user as IUser;
+    const {_id, status, tokens = []} = req.user as IUser;
+    const tokenToDelete = req.get(RequestHeadersEnum.AUTHORIZATION);
+
     if (status !== UserStatusEnum.PENDING) {
       return next(
         new ErrorHandler(
@@ -42,6 +44,16 @@ class UserController {
     }
 
     await userService.updateUserByParams({_id}, {status: UserStatusEnum.CONFIRMED});
+
+    const index = tokens.findIndex(({action, token}) => {
+      return token === tokenToDelete && action === ActionEnum.USER_REGISTER;
+    });
+
+    if (index !== -1) {
+      tokens.splice(index, 1);
+
+      await userService.updateUserByParams({_id}, {tokens} as Partial<IUser>);
+    }
 
     res.end();
   }

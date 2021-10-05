@@ -71,6 +71,27 @@ class UserController {
     res.end();
   }
 
+  async setForgotPass(req: IRequestExtended, res: Response, next: NextFunction) {
+    const {_id, tokens = []} = req.user as IUser;
+    const {password} = req.body;
+    const tokenToDelete = req.get(RequestHeadersEnum.AUTHORIZATION);
+    const hashPass = await hashPassword(password);
+
+    await userService.updateUserByParams({_id}, {password: hashPass});
+
+    const index = tokens.findIndex(({action, token}) => {
+      return token === tokenToDelete && action === ActionEnum.FORGOT_PASSWORD;
+    });
+
+    if (index !== -1) {
+      tokens.splice(index, 1);
+
+      await userService.updateUserByParams({_id}, {tokens} as Partial<IUser>);
+    }
+
+    res.end();
+
+  }
 }
 
 export const userController = new UserController();

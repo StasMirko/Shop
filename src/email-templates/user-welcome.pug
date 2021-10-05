@@ -2,6 +2,8 @@ extends template
 block content
     div
         | Вітаємо в нашому магазині
+        br
         | Для підтвердження натисніть сюди:
+        br
         div
             a(href=frontendUrl + `/email/confirm/` + token) тут

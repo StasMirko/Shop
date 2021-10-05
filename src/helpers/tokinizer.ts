@@ -13,6 +13,10 @@ export const tokinizer = (action: ActionEnum): {access_token: string, refresh_to
       access_token = jwt.sign({}, config.JWT_CONFIRM_EMAIL_SECRET, {expiresIn: config.JWT_CONFIRM_EMAIL_LIFETIME});
       break;
 
+    case ActionEnum.FORGOT_PASSWORD:
+      access_token = jwt.sign({}, config.JWT_PASS_RESET_SECRET, {expiresIn: config.JWT_PASS_RESET_LIFETIME});
+      break;
+
     default:
       throw new ErrorHandler(ResponseStatusCodesEnum.SERVER, 'wrong Action type');
   }

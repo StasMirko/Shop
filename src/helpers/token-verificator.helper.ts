@@ -12,9 +12,9 @@ export const tokinVerificator = async (action: ActionEnum, token: string): Promi
     let isValid;
 
     switch (action) {
-      // case ActionEnum.USER_AUTH:
-      //   isValid = await verifyPromise(token, config.JWT_SECRET) as Promise<VerifyErrors | null>;
-      //   break;
+      case ActionEnum.USER_AUTH:
+        isValid = await verifyPromise(token, config.JWT_SECRET) as Promise<VerifyErrors | null>;
+        break;
 
       case ActionEnum.USER_REGISTER:
         isValid = await verifyPromise(token, config.JWT_CONFIRM_EMAIL_SECRET) as Promise<VerifyErrors | null>;

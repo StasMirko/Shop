@@ -18,7 +18,7 @@ export const ProductSchema: Schema = new Schema<IProduct>({
   },
   type: {
     type: String,
-    required: true,
+    required: true
     // enum: Object.values(ProductTypeEnum)
   },
   category: {

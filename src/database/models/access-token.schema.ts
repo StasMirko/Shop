@@ -1,15 +1,26 @@
 import {Document, Model, model, Schema} from 'mongoose';
-import {IUser} from '../../models';
+import {IAccessToken} from '../../models';
 import {TableNamesEnum} from '../../constants';
 
-export type UserType = IUser & Document
+export type AccessTokenType = IAccessToken & Document
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-export const UserSchema: Schema = new Schema<IUser>({
-
+export const AccessTokenSchema: Schema = new Schema<IAccessToken>({
+  accessToken: {
+    type: String,
+    required: true
+  },
+  refreshToken: {
+    type: String,
+    required: true
+  },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: TableNamesEnum.USER
+  }
 },{
   timestamps: true
 });
 
-export const UserModel: Model<UserType> = model<UserType>(TableNamesEnum.USER, UserSchema);
+export const AccessTokenModel: Model<AccessTokenType> = model<AccessTokenType>(TableNamesEnum.ACCESS_TOKEN, AccessTokenSchema);

@@ -4,13 +4,13 @@ export interface IProduct {
   _id: string;
   title: string;
   description: string;
-  type: ProductTypeEnum;
+  type: ProductTypeEnum
   category: string;
   price: number;
   hasDiscount: boolean;
   oldPrice?: number;
   tags?: string[];
-  photos?: string;
+  photos?: string[];
   docs?: string[];
   stockCount: number;
   userId: string;

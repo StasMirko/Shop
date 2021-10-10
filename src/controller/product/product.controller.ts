@@ -9,7 +9,7 @@ class ProductController {
 
     const newProduct = await productService.createProduct({...product, userId: _id});
 
-    res.json(newProduct.toJSON);
+    res.json(newProduct);
   }
 }
 

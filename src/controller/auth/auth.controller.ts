@@ -1,6 +1,6 @@
-import {IRequestExtended, IUser} from '../../models';
+import {IRequestExtended, IUser} from '../../interfaces';
 import {NextFunction, Request, Response} from 'express';
-import {comparePassword, tokinizer} from '../../helpers';
+import {comparePassword, tokenGenerator} from '../../helpers';
 import {ActionEnum, RequestHeadersEnum, ResponseStatusCodesEnum} from '../../constants';
 import {authService} from '../../services';
 import {customErrors, ErrorHandler} from '../../errors';
@@ -18,7 +18,7 @@ class AuthController {
         return next(new ErrorHandler(ResponseStatusCodesEnum.NOT_FOUND, customErrors.NOT_FOUND.message));
       }
 
-      const {access_token, refresh_token} = tokinizer(ActionEnum.USER_AUTH);
+      const {access_token, refresh_token} = tokenGenerator(ActionEnum.USER_AUTH);
 
       await authService.createTokenPair({
         accessToken: access_token,

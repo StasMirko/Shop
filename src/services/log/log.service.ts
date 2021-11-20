@@ -1,5 +1,5 @@
 import {LogModel} from '../../database';
-import {ILog} from '../../models';
+import {ILog} from '../../interfaces';
 
 class LogService {
   createLog(log: Partial<ILog>): Promise<ILog>{

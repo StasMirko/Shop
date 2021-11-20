@@ -1,6 +1,6 @@
 import {Document, Model, model, Schema} from 'mongoose';
 
-import {IProduct} from '../../models';
+import {IProduct} from '../../interfaces';
 import {ProductTypeEnum, TableNamesEnum} from '../../constants';
 
 export type ProductType = IProduct & Document

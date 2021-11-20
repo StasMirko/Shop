@@ -2,10 +2,10 @@ import * as EmailTemplates from 'email-templates';
 import * as nodemailer from 'nodemailer';
 import * as path from 'path';
 
-import {ActionEnum, ResponseStatusCodesEnum} from '../../constants';
-import {config} from '../../config';
-import {htmlTemplates} from '../../email-templates';
-import {ErrorHandler} from '../../errors';
+import { ActionEnum, ResponseStatusCodesEnum } from '../../constants';
+import { config } from '../../config';
+import { htmlTemplates } from '../../email-templates';
+import { ErrorHandler } from '../../errors';
 
 if (
   !config.FRONTEND_URL
@@ -45,10 +45,10 @@ export class MailService {
 
     Object.assign(context, contextExtension);
 
-    const html = await emailTemplates.render(templateInfo.templateFileName, context );
+    const html = await emailTemplates.render(templateInfo.templateFileName, context);
 
     await transporter.sendMail({
-      from: `NOREPLY<${config.ROOT_EMAIL}>`,
+      from: `MyShop<${config.ROOT_EMAIL}>`,
       to: email,
       subject: templateInfo.subject,
       html

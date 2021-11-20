@@ -1,18 +1,18 @@
-import {NextFunction, Request, Response} from 'express';
+import { NextFunction, Request, Response } from 'express';
 import * as cors from 'cors';
 
 import * as express from 'express';
 import * as rateLimit from 'express-rate-limit';
 import * as helmet from 'helmet';
-import * as dotenv from 'dotenv';
+import * as dotEnv from 'dotenv';
 import * as morgan from 'morgan';
 import * as path from 'path';
 import * as mongoose from 'mongoose';
-import {config} from './config';
-import {authRouter, productRouter, userRouter} from './routes';
-import {ResponseStatusCodesEnum} from './constants';
+import { config } from './config';
+import { authRouter, productRouter, userRouter } from './routes';
+import { ResponseStatusCodesEnum } from './constants';
 
-dotenv.config();
+dotEnv.config();
 
 const serverRequestLimit = rateLimit({
   windowMs: config.serverRateLimits.period,
@@ -33,7 +33,7 @@ class App {
     }));
 
     this.app.use(express.json());
-    this.app.use(express.urlencoded({extended: true}));
+    this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.static(path.resolve((global as any).appRoot, 'public')));
 
     this.mountRoutes();
@@ -43,20 +43,19 @@ class App {
   }
 
   private setupDB(): void {
-    mongoose.connect(config.MONGODB_URL, {useNewUrlParser: true});
+    mongoose.connect(config.MONGODB_URL, { useNewUrlParser: true });
 
     const db = mongoose.connection;
     db.on('error', console.log.bind(console, 'MONGO ERROR'));
   }
 
-  private customErrorHandler(err: any, req: Request, res: Response, next: NextFunction): void{
+  private customErrorHandler(err: any, req: Request, res: Response, next: NextFunction): void {
     res
       .status(err.status || ResponseStatusCodesEnum.SERVER)
       .json({
         message: err.message || 'Unknown error',
         code: err.code
       });
-
   }
 
   private configureCors = (origin: any, callback: any) => {

@@ -2,7 +2,7 @@ import {NextFunction, Response} from 'express';
 import {ActionEnum, RequestHeadersEnum, ResponseStatusCodesEnum} from '../../constants';
 import {customErrors, ErrorHandler} from '../../errors';
 import {authService} from '../../services';
-import {IRequestExtended} from '../../models';
+import {IRequestExtended} from '../../interfaces';
 import {tokinVerificator} from '../../helpers';
 
 export const checkAccessTokenMiddleware = async (req: IRequestExtended, res: Response, next: NextFunction): Promise<void> => {

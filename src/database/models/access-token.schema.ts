@@ -1,5 +1,5 @@
 import {Document, Model, model, Schema} from 'mongoose';
-import {IAccessToken} from '../../models';
+import {IAccessToken} from '../../interfaces';
 import {TableNamesEnum} from '../../constants';
 
 export type AccessTokenType = IAccessToken & Document

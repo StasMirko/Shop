@@ -1,4 +1,4 @@
-import {IRequestExtended, IUser} from '../../models';
+import {IRequestExtended, IUser} from '../../interfaces';
 import {NextFunction, Response} from 'express';
 import {productService} from '../../services';
 

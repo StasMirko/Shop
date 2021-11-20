@@ -1,7 +1,7 @@
 import {NextFunction, Response} from 'express';
 import {customErrors, ErrorHandler} from '../../errors';
 import {ResponseStatusCodesEnum, UserStatusEnum} from '../../constants';
-import {IRequestExtended, IUser} from '../../models';
+import {IRequestExtended, IUser} from '../../interfaces';
 
 export const checkIsUserConfirmedMiddleware = (
   req: IRequestExtended,

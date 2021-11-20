@@ -3,7 +3,7 @@ import {NextFunction, Response} from 'express';
 import {userService} from '../../services';
 import {customErrors, ErrorHandler} from '../../errors';
 import {ResponseStatusCodesEnum} from '../../constants';
-import {IRequestExtended} from '../../models';
+import {IRequestExtended} from '../../interfaces';
 
 export const checkIsUserExistByEmailMiddleware =
   async (req: IRequestExtended, res: Response, next: NextFunction): Promise<void | NextFunction> => {

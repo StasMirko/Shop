@@ -1,5 +1,5 @@
 import {ProductModel} from '../../database';
-import {IProduct} from '../../models';
+import {IProduct} from '../../interfaces';
 
 class ProductService {
   createProduct(product: IProduct) {

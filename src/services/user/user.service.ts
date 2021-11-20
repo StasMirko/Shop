@@ -1,7 +1,7 @@
-import {Types} from 'mongoose';
-import {UserModel} from '../../database';
-import {IUser, IUserToken} from '../../models';
-import {ActionEnum} from '../../constants';
+import { Types } from 'mongoose';
+import { UserModel } from '../../database';
+import { IUser, IUserToken } from '../../interfaces';
+import { ActionEnum } from '../../constants';
 
 class UserService {
   createUser(user: Partial<IUser>): Promise<IUser>{
@@ -12,7 +12,7 @@ class UserService {
 
   addActionToken(userId: string, tokenObject: IUserToken): Promise<IUser> {
     return UserModel.update(
-      {_id: Types.ObjectId(userId)},
+      { _id: Types.ObjectId(userId) },
       {
         $push: {
           tokens: tokenObject
@@ -32,8 +32,8 @@ class UserService {
   findUserByActionToken(action: ActionEnum, token: string): Promise<IUser | null> {
     return UserModel.findOne({
       $and: [
-        {'tokens.action': action},
-        {'tokens.token': token}
+        { 'tokens.action': action },
+        { 'tokens.token': token }
       ]
     }) as any;
   }

@@ -72,7 +72,7 @@ class UserController {
 
   async setForgotPass(req: IRequestExtended, res: Response, next: NextFunction) {
     const { _id, tokens = [] } = req.user as IUser;
-    const {password} = req.body;
+    const { password } = req.body;
     const tokenToDelete = req.get(RequestHeadersEnum.AUTHORIZATION);
     const hashPass = await hashPassword(password);
 

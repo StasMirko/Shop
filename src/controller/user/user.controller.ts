@@ -76,7 +76,7 @@ class UserController {
     const tokenToDelete = req.get(RequestHeadersEnum.AUTHORIZATION);
     const hashPass = await hashPassword(password);
 
-    await userService.updateUserByParams({ _id }, { password: hashPass });
+    await userService.updateUserByParams({ _id }, { password: hashPass  });
 
     const index = tokens.findIndex(({ action, token }) => {
       return token === tokenToDelete && action === ActionEnum.FORGOT_PASSWORD;

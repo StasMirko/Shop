@@ -1,13 +1,13 @@
-import {verify, VerifyErrors} from 'jsonwebtoken';
+import { verify, VerifyErrors } from 'jsonwebtoken';
 
-import {promisify} from 'util';
-import {ActionEnum, ResponseStatusCodesEnum} from '../constants';
-import {customErrors, ErrorHandler} from '../errors';
-import {config} from '../config';
+import { promisify } from 'util';
+import { ActionEnum, ResponseStatusCodesEnum } from '../constants';
+import { customErrors, ErrorHandler } from '../errors';
+import { config } from '../config';
 
 const verifyPromise = promisify(verify);
 
-export const tokinVerificator = async (action: ActionEnum, token: string): Promise<VerifyErrors | null> => {
+export const tokenVerification = async (action: ActionEnum, token: string): Promise<VerifyErrors | null> => {
   try {
     let isValid;
 

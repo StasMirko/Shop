@@ -1,6 +1,6 @@
-import {Request} from 'express';
-import {IUser} from './user.interface';
+import { Request } from 'express';
+import { IUser } from './user.interface';
 
-export interface IRequestExtended extends Request{
+export interface IRequestExtended extends Request {
   user?: IUser;
 }

@@ -1,8 +1,8 @@
-import {LogModel} from '../../database';
-import {ILog} from '../../interfaces';
+import { LogModel } from '../../database';
+import { ILog } from '../../interfaces';
 
 class LogService {
-  createLog(log: Partial<ILog>): Promise<ILog>{
+  createLog(log: Partial<ILog>): Promise<ILog> {
     const logToCreate = new LogModel(log);
 
     return logToCreate.save();

@@ -28,7 +28,7 @@ class UserController {
     res.sendStatus(ResponseStatusCodesEnum.CREATED);
   }
 
-  async confirmUser(req: IRequestExtended, res: Response, next: NextFunction){
+  async confirmUser(req: IRequestExtended, res: Response, next: NextFunction) {
 
     const { _id, status, tokens = [] } = req.user as IUser;
     const tokenToDelete = req.get(RequestHeadersEnum.AUTHORIZATION);

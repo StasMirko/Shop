@@ -1,10 +1,10 @@
-import {NextFunction, Response} from 'express';
+import { NextFunction, Response } from 'express';
 
-import {ActionEnum, RequestHeadersEnum, ResponseStatusCodesEnum} from '../../constants';
-import {customErrors, ErrorHandler} from '../../errors';
-import {userService} from '../../services';
-import {IRequestExtended} from '../../interfaces';
-import {tokinVerificator} from '../../helpers';
+import { ActionEnum, RequestHeadersEnum, ResponseStatusCodesEnum } from '../../constants';
+import { customErrors, ErrorHandler } from '../../errors';
+import { userService } from '../../services';
+import { IRequestExtended } from '../../interfaces';
+import {tokenVerification} from '../../helpers';
 
 export const checkForgotPassTokenMiddleware = async (req: IRequestExtended, res: Response, next: NextFunction): Promise<void> => {
   try {
@@ -14,7 +14,7 @@ export const checkForgotPassTokenMiddleware = async (req: IRequestExtended, res:
       return next(new ErrorHandler(ResponseStatusCodesEnum.BAD_REQUEST, customErrors.BAD_REQUEST_NO_TOKEN.message));
     }
 
-    await tokinVerificator(ActionEnum.FORGOT_PASSWORD, token);
+    await tokenVerification(ActionEnum.FORGOT_PASSWORD, token);
 
     const userByToken = await userService.findUserByActionToken(ActionEnum.FORGOT_PASSWORD, token);
 

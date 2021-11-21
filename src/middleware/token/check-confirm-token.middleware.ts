@@ -1,9 +1,9 @@
-import {NextFunction, Response} from 'express';
-import {ActionEnum, RequestHeadersEnum, ResponseStatusCodesEnum} from '../../constants';
-import {customErrors, ErrorHandler} from '../../errors';
-import {userService} from '../../services';
-import {IRequestExtended} from '../../interfaces';
-import {tokinVerificator} from '../../helpers';
+import { NextFunction, Response } from 'express';
+import { ActionEnum, RequestHeadersEnum, ResponseStatusCodesEnum } from '../../constants';
+import { customErrors, ErrorHandler } from '../../errors';
+import { userService } from '../../services';
+import { IRequestExtended } from '../../interfaces';
+import { tokenVerification } from '../../helpers';
 
 export const checkConfirmTokenMiddleware = async (req: IRequestExtended, res: Response, next: NextFunction): Promise<void> => {
 
@@ -14,7 +14,7 @@ export const checkConfirmTokenMiddleware = async (req: IRequestExtended, res: Re
       return next(new ErrorHandler(ResponseStatusCodesEnum.BAD_REQUEST, customErrors.BAD_REQUEST_NO_TOKEN.message));
     }
 
-    await tokinVerificator(ActionEnum.USER_REGISTER, token);
+    await tokenVerification(ActionEnum.USER_REGISTER, token);
 
     const userByToken = await userService.findUserByActionToken(ActionEnum.USER_REGISTER, token);
 
